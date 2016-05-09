@@ -8,6 +8,9 @@ FROM resin/%%RESIN_MACHINE_NAME%%-python
 #    alsa-utils libasound2-dev && \
 #    apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Force tty1 to attach
+COPY tty-input.conf /etc/systemd/system/launch.service.d/tty-input.conf
+
 # Set our working directory
 WORKDIR /usr/src/app
 
@@ -21,7 +24,7 @@ RUN pip install -r /requirements.txt
 COPY . ./
 
 # switch on systemd init system in container
-ENV INITSYSTEM off
+ENV INITSYSTEM on
 
 # main.py will run when container starts up on the device
-CMD python src/main.py < /dev/tty1
+CMD python src/main.py > /dev/console

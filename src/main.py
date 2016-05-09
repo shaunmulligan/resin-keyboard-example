@@ -10,6 +10,7 @@ stdscr.refresh()
 
 key = ''
 while key != ord('q'):
+	print 'I am in a loop!'
     key = stdscr.getch()
     stdscr.addch(20,25,key)
     stdscr.refresh()
